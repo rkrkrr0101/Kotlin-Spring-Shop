@@ -1,0 +1,7 @@
+/login으로 접근하면(일반로그인)
+    JwtAuthenticationFilter로 들어가고
+        username과 password가 json으로 들어있으면
+            해당정보를 om이 Member객체로 만들어서 PrincipalDetailsService.loadUserByUsername()실행//이거 패스워드도 검색하게 바꿔야할듯
+            실행성공하면(해당정보가 있으면)
+            successfulAuthentication실행
+                여기서 액세스토큰과 리프레시토큰을 생성한후에 response에 담아서 리턴해줌

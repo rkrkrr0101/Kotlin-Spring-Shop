@@ -9,20 +9,15 @@ import org.jetbrains.annotations.NotNull
 
 @Entity
 class Member(
-    @NotNull
     var username:String,
-    @NotNull
     var password:String,
-    @NotNull
     var name:String,
-    @NotNull
     var email:String,
-    @NotNull
     var role:String="ROLE_USER",
     var provider:String="",
     var providerId:String="",
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id:Long,
+    var id:Long=0,
 ):BaseEntity() {
 }
