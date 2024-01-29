@@ -41,8 +41,8 @@ class JwtAuthenticationFilter(private val authManager: AuthenticationManager):Us
         val principalDetails = authResult.principal as PrincipalDetails
 
         val accessToken =
-            JwtUtil().generateAccessToken(principalDetails.member.id, principalDetails.member.role)
-        val refreshToken=JwtUtil().generateRefreshToken(principalDetails.member.id)
+            JwtUtil().generateAccessToken(principalDetails.member)
+        val refreshToken=JwtUtil().generateRefreshToken(principalDetails.member)
 
         response.addHeader(HttpHeaders.AUTHORIZATION,"Bearer $accessToken")
         response.addHeader("Refresh-Token","Bearer $refreshToken")

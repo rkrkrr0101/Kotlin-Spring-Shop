@@ -1,6 +1,10 @@
 package com.shop.shop.security
 
+import com.shop.shop.member.repository.MemberRepository
 import com.shop.shop.security.auth.filter.JwtAuthenticationFilter
+import com.shop.shop.security.auth.filter.JwtAuthorizationFilter
+import com.shop.shop.security.oauth.Oauth2AuthenticationFailureHandler
+import com.shop.shop.security.oauth.Oauth2AuthenticationSuccessHandler
 import com.shop.shop.security.oauth.PrincipalOauth2UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,7 +23,10 @@ import org.springframework.web.filter.CorsFilter
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 class SecurityConfig(val corsFilter: CorsFilter,
                      val principalOauth2UserService: PrincipalOauth2UserService,
-                     val authConfiguration: AuthenticationConfiguration) {
+                     val authConfiguration: AuthenticationConfiguration,
+                     val memberRepository: MemberRepository,
+                     val oauth2AuthenticationSuccessHandler: Oauth2AuthenticationSuccessHandler,
+                     val oauth2AuthenticationFailureHandler: Oauth2AuthenticationFailureHandler) {
     @Bean
     fun filterChain(http:HttpSecurity):SecurityFilterChain{
         http.formLogin {
@@ -36,10 +43,14 @@ class SecurityConfig(val corsFilter: CorsFilter,
         //여기까지 restapi+jwt기본설정
 
         http.authorizeHttpRequests {
-
+            it.requestMatchers("/user/**").authenticated()
+            it.requestMatchers("/manager/**").hasAnyRole("MANAGER","ADMIN")
+            it.requestMatchers("/admin/**").hasAnyRole("ADMIN")
+            it.anyRequest().permitAll()
         }//url권한설정
 
         http.addFilter(JwtAuthenticationFilter(authenticationManager(authConfiguration)))
+        http.addFilter(JwtAuthorizationFilter(authenticationManager(authConfiguration),memberRepository))
 
         //일반로그인
 
@@ -48,8 +59,8 @@ class SecurityConfig(val corsFilter: CorsFilter,
             it.userInfoEndpoint{
                 it.userService(principalOauth2UserService) ////oauth2로그인시 처리할 서비스설정
             }
-            it.successHandler()//성공핸들러
-            it.failureHandler()//실패핸들러
+            it.successHandler(oauth2AuthenticationSuccessHandler)//성공핸들러
+            it.failureHandler(oauth2AuthenticationFailureHandler)//실패핸들러
         }//oauth2설정
 
 
