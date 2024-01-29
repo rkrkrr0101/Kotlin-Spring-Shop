@@ -20,4 +20,7 @@ class Member(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id:Long=0,
 ):BaseEntity() {
+    override fun toString(): String {
+        return "Member(username='$username', password='$password', name='$name', email='$email', role='$role', provider='$provider', providerId='$providerId', id=$id)"
+    }
 }

@@ -22,6 +22,7 @@ class JwtAuthenticationFilter(private val authManager: AuthenticationManager):Us
         request?:throw IllegalArgumentException("JwtAuthenticationFilter request null")
         val om=ObjectMapper()
         val member = om.readValue(request.inputStream, Member::class.java)
+        println(member)
 
         val authToken = UsernamePasswordAuthenticationToken(member.username, member.password)
         val auth = authManager.authenticate(authToken)
