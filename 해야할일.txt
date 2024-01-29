@@ -10,6 +10,8 @@
 	rest서버 oauth2동작방식
 	https://knoc-story.tistory.com/80
 	(https://gilssang97.tistory.com/58)
+	https://github.com/SangHyunGil/SpringSecurityJWT-Local-OAuth2-EmailAuth
+	https://velog.io/@ch4570/posts?tag=spring-security
 	restapi에선 그냥 프론트가 소셜로그인버튼을 누르면 네이버로 가고,
 	네이버에서 로그인을 하면 Authorization code를 주는데,이걸 담아서 백엔드에 요청
 	백엔드는 그거가지고 네이버에 토큰요청후 토큰발급받음
