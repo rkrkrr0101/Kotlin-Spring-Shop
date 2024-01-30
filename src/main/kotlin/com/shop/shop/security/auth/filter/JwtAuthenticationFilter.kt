@@ -2,8 +2,10 @@ package com.shop.shop.security.auth.filter
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.shop.shop.member.domain.Member
+import com.shop.shop.member.repository.MemberRepository
 import com.shop.shop.security.auth.PrincipalDetails
 import com.shop.shop.security.jwt.JwtUtil
+import com.shop.shop.token.domain.RefreshToken
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -17,7 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 //일반로그인 필터
-class JwtAuthenticationFilter(private val authManager: AuthenticationManager):UsernamePasswordAuthenticationFilter() {
+class JwtAuthenticationFilter(private val authManager: AuthenticationManager,
+                              val memberRepository: MemberRepository):UsernamePasswordAuthenticationFilter() {
     override fun attemptAuthentication(request: HttpServletRequest?, response: HttpServletResponse?): Authentication {
         request?:throw IllegalArgumentException("JwtAuthenticationFilter request null")
         val om=ObjectMapper()
@@ -40,10 +43,14 @@ class JwtAuthenticationFilter(private val authManager: AuthenticationManager):Us
             throw IllegalArgumentException("잘못된입력")
         }
         val principalDetails = authResult.principal as PrincipalDetails
+        val memberEntity = principalDetails.member
 
         val accessToken =
             JwtUtil().generateAccessToken(principalDetails.member)
         val refreshToken=JwtUtil().generateRefreshToken(principalDetails.member)
+
+        memberEntity.refreshTokenId= refreshToken.getTokenTokenId()
+        memberRepository.save(memberEntity)
 
         response.addHeader(HttpHeaders.AUTHORIZATION,"Bearer $accessToken")
         response.addHeader("Refresh-Token","Bearer $refreshToken")

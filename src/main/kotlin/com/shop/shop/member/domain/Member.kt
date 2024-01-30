@@ -1,6 +1,10 @@
 package com.shop.shop.member.domain
 
 import com.shop.shop.domain.BaseEntity
+import com.shop.shop.token.domain.RefreshToken
+import jakarta.persistence.Column
+import jakarta.persistence.Embeddable
+import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -16,6 +20,7 @@ class Member(
     var role:String="ROLE_USER",
     var provider:String="",
     var providerId:String="",
+    var refreshTokenId: String="",
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id:Long=0,

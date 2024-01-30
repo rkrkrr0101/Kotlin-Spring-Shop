@@ -49,13 +49,13 @@ class SecurityConfig(val corsFilter: CorsFilter,
             it.anyRequest().permitAll()
         }//url권한설정
 
-        http.addFilter(JwtAuthenticationFilter(authenticationManager(authConfiguration)))
+        http.addFilter(JwtAuthenticationFilter(authenticationManager(authConfiguration),memberRepository))
         http.addFilter(JwtAuthorizationFilter(authenticationManager(authConfiguration),memberRepository))
 
         //일반로그인
 
         http.oauth2Login {
-            //oauth2로그인시 정보가져올 엔트포인트설정
+            //oauth2로그인시 정보가져올 엔드포인트설정
             it.userInfoEndpoint{
                 it.userService(principalOauth2UserService) ////oauth2로그인시 처리할 서비스설정
             }

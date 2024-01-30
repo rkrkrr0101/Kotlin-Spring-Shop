@@ -33,7 +33,7 @@ class PrincipalOauth2UserService(val pwEncoder: BCryptPasswordEncoder,
 
         var memberEntity=memberRepository.findByUsername(username)
         if (memberEntity==null){
-            memberEntity= Member(username,password,email,role,provider,providerId)
+            memberEntity= Member(username,password,username,email,role,provider,providerId)
             memberRepository.save(memberEntity)
         }
 
