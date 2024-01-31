@@ -30,13 +30,5 @@ class JwtUtil {
             .withClaim("tokenId",UUID.randomUUID().toString())
             .sign(Algorithm.HMAC512(secretKey)))
     }
-    fun getTokenUsername(token:String):String{
-        return getTokenClaim(token,"username")
-    }
-    private fun getTokenClaim(token: String, claimKey: String): String {
-            val jwtToken = token.replace("Bearer ", "")
-            return JWT.require(Algorithm.HMAC512(secretKey))//토큰만들때 넣은 시크릿값
-                .build().verify(jwtToken).getClaim(claimKey)
-                .asString()
-    }
+
 }

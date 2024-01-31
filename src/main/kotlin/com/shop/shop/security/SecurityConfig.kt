@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.filter.CorsFilter
 
@@ -26,7 +27,8 @@ class SecurityConfig(val corsFilter: CorsFilter,
                      val authConfiguration: AuthenticationConfiguration,
                      val memberRepository: MemberRepository,
                      val oauth2AuthenticationSuccessHandler: Oauth2AuthenticationSuccessHandler,
-                     val oauth2AuthenticationFailureHandler: Oauth2AuthenticationFailureHandler) {
+                     val oauth2AuthenticationFailureHandler: Oauth2AuthenticationFailureHandler,
+                     val entryPoint: AuthenticationEntryPoint) {
     @Bean
     fun filterChain(http:HttpSecurity):SecurityFilterChain{
         http.formLogin {
@@ -51,6 +53,7 @@ class SecurityConfig(val corsFilter: CorsFilter,
 
         http.addFilter(JwtAuthenticationFilter(authenticationManager(authConfiguration),memberRepository))
         http.addFilter(JwtAuthorizationFilter(authenticationManager(authConfiguration),memberRepository))
+        http.exceptionHandling {it.authenticationEntryPoint(entryPoint)  }
 
         //일반로그인
 

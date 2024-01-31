@@ -1,9 +1,11 @@
 package com.shop.shop.security.auth.filter
 
+import com.auth0.jwt.exceptions.JWTDecodeException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.shop.shop.member.repository.MemberRepository
 import com.shop.shop.security.auth.PrincipalDetails
 import com.shop.shop.security.jwt.JwtUtil
+import com.shop.shop.token.domain.AccessToken
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -25,36 +27,31 @@ class JwtAuthorizationFilter(authManager: AuthenticationManager,
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         println("인증서버동작")
-        val jwtHeader = request.getHeader("Authorization")
-        if (jwtHeader==null || !jwtHeader.startsWith("Bearer")){ //토큰없거나 이상하면 리턴
-            chain.doFilter(request, response)
-            return
-        }
-        println(jwtHeader)
-        var username=""
         try {
-            username=JwtUtil().getTokenUsername(jwtHeader)
+            val jwtHeader = request.getHeader("Authorization")
+            if (jwtHeader==null || !jwtHeader.startsWith("Bearer")){ //토큰없거나 이상하면 리턴
+
+                throw JWTDecodeException("")
+
+            }
+
+
+            val accessToken = AccessToken(jwtHeader)
+            var username=accessToken.getTokenUsername()
+
+            println(username)
+            val memberEntity = memberRepository.findByUsername(username)?:
+                throw UsernameNotFoundException("잘못된 토큰")
+            val principalDetails = PrincipalDetails(memberEntity)
+            val auth:Authentication=UsernamePasswordAuthenticationToken( //토큰으로 강제로그인
+                principalDetails,
+                null,
+                principalDetails.authorities
+            )
+            SecurityContextHolder.getContext().authentication=auth//세션에 강제로 박아넣기
         } catch (e:Exception){
-            response.status=HttpStatus.UNAUTHORIZED.value()
-            response.contentType=MediaType.APPLICATION_JSON_VALUE
-            response.characterEncoding="UTF-8"
-            val statusException = ResponseStatusException(HttpStatus.UNAUTHORIZED, "토큰이 이상함")
-            ObjectMapper().writeValue(response.writer,statusException)
-            chain.doFilter(request, response)
-            return
+            request.setAttribute("exception",e)
         }
-
-
-        println(username)
-        val memberEntity = memberRepository.findByUsername(username)?:
-            throw UsernameNotFoundException("잘못된 토큰")
-        val principalDetails = PrincipalDetails(memberEntity)
-        val auth:Authentication=UsernamePasswordAuthenticationToken( //토큰으로 강제로그인
-            principalDetails,
-            null,
-            principalDetails.authorities
-        )
-        SecurityContextHolder.getContext().authentication=auth//세션에 강제로 박아넣기
 
         chain.doFilter(request, response)
 
