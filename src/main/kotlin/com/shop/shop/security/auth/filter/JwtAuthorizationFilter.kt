@@ -35,13 +35,11 @@ class JwtAuthorizationFilter(authManager: AuthenticationManager,
 
             }
 
-
             val accessToken = AccessToken(jwtHeader)
             var username=accessToken.getTokenUsername()
 
-            println(username)
             val memberEntity = memberRepository.findByUsername(username)?:
-                throw UsernameNotFoundException("잘못된 토큰")
+                throw JWTDecodeException("")
             val principalDetails = PrincipalDetails(memberEntity)
             val auth:Authentication=UsernamePasswordAuthenticationToken( //토큰으로 강제로그인
                 principalDetails,

@@ -1,6 +1,6 @@
 package com.shop.shop.token.domain
 
-class RefreshToken(token:String):Token(token) {
+class RefreshToken(tokenCode:String):Token(tokenCode) {
     fun getTokenTokenId():String{
         return getTokenClaim("tokenId")
     }

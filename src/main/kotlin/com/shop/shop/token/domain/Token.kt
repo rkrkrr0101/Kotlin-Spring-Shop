@@ -3,13 +3,12 @@ package com.shop.shop.token.domain
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.shop.shop.constants.Constants
-import java.text.SimpleDateFormat
 import java.util.Date
 
-open class Token(val token:String) {
+open class Token(val tokenCode:String) {
 
     fun removeBearer():String{
-        return token.replace("Bearer ", "")
+        return tokenCode.replace("Bearer ", "")
     }
     fun getTokenClaim(claimKey: String): String {
         val jwtToken = removeBearer()
@@ -27,7 +26,7 @@ open class Token(val token:String) {
     }
 
     override fun toString(): String {
-        return token
+        return tokenCode
     }
 
 }

@@ -6,6 +6,7 @@ import com.shop.shop.security.auth.filter.JwtAuthorizationFilter
 import com.shop.shop.security.oauth.Oauth2AuthenticationFailureHandler
 import com.shop.shop.security.oauth.Oauth2AuthenticationSuccessHandler
 import com.shop.shop.security.oauth.PrincipalOauth2UserService
+import com.shop.shop.token.JwtService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -26,6 +27,7 @@ class SecurityConfig(val corsFilter: CorsFilter,
                      val principalOauth2UserService: PrincipalOauth2UserService,
                      val authConfiguration: AuthenticationConfiguration,
                      val memberRepository: MemberRepository,
+                     val jwtService: JwtService,
                      val oauth2AuthenticationSuccessHandler: Oauth2AuthenticationSuccessHandler,
                      val oauth2AuthenticationFailureHandler: Oauth2AuthenticationFailureHandler,
                      val entryPoint: AuthenticationEntryPoint) {
@@ -51,7 +53,7 @@ class SecurityConfig(val corsFilter: CorsFilter,
             it.anyRequest().permitAll()
         }//url권한설정
 
-        http.addFilter(JwtAuthenticationFilter(authenticationManager(authConfiguration),memberRepository))
+        http.addFilter(JwtAuthenticationFilter(authenticationManager(authConfiguration),memberRepository,jwtService))
         http.addFilter(JwtAuthorizationFilter(authenticationManager(authConfiguration),memberRepository))
         http.exceptionHandling {it.authenticationEntryPoint(entryPoint)  }
 
