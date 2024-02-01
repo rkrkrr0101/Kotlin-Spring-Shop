@@ -6,7 +6,7 @@ import com.shop.shop.security.auth.filter.JwtAuthorizationFilter
 import com.shop.shop.security.oauth.Oauth2AuthenticationFailureHandler
 import com.shop.shop.security.oauth.Oauth2AuthenticationSuccessHandler
 import com.shop.shop.security.oauth.PrincipalOauth2UserService
-import com.shop.shop.token.JwtService
+import com.shop.shop.token.service.JwtService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager

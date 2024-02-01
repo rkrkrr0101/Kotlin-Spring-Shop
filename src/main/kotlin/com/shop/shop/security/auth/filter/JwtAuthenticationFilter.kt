@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.shop.shop.member.domain.Member
 import com.shop.shop.member.repository.MemberRepository
 import com.shop.shop.security.auth.PrincipalDetails
-import com.shop.shop.security.jwt.JwtUtil
-import com.shop.shop.token.JwtService
-import com.shop.shop.token.domain.RefreshToken
+import com.shop.shop.token.service.JwtService
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -22,7 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //일반로그인 필터
 class JwtAuthenticationFilter(private val authManager: AuthenticationManager,
                               val memberRepository: MemberRepository,
-    val jwtService: JwtService):UsernamePasswordAuthenticationFilter() {
+    val jwtService: JwtService
+):UsernamePasswordAuthenticationFilter() {
     override fun attemptAuthentication(request: HttpServletRequest?, response: HttpServletResponse?): Authentication {
         request?:throw IllegalArgumentException("JwtAuthenticationFilter request null")
         val om=ObjectMapper()

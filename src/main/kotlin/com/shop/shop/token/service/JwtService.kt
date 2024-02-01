@@ -1,4 +1,4 @@
-package com.shop.shop.token
+package com.shop.shop.token.service
 
 
 import com.auth0.jwt.exceptions.JWTDecodeException
