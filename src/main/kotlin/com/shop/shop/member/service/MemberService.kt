@@ -1,6 +1,7 @@
 package com.shop.shop.member.service
 
 import com.shop.shop.member.domain.Member
+import com.shop.shop.member.domain.MemberPasswordService
 import com.shop.shop.member.dto.MemberCreateDto
 import com.shop.shop.member.repository.MemberRepository
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -18,9 +19,7 @@ class MemberService(val memberRepository: MemberRepository,val pwEncoder: BCrypt
     fun memberSave(dto: MemberCreateDto){
         val member = Member(dto.username,dto.password,dto.name,dto.email)
         member.role="ROLE_USER"
-        val rawPassword=member.password
-        val encPassword=pwEncoder.encode(rawPassword)
-        member.password=encPassword
+        member.password=MemberPasswordService().cryptPassword(member)
         memberRepository.save(member)
     }
 }
