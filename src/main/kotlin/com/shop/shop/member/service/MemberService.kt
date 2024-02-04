@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class MemberService(val memberRepository: MemberRepository,val pwEncoder: BCryptPasswordEncoder) {
-    
+
     fun isUser(dto: MemberCreateDto):Boolean{
         val findMember = memberRepository.findByUsername(dto.username)
         return findMember!=null

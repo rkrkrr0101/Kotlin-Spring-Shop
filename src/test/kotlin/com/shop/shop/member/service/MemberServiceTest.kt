@@ -12,11 +12,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.transaction.annotation.Transactional
 
-@SpringBootTest
+@DataJpaTest
 @Transactional
-class MemberServiceTest @Autowired constructor( val memberRepository: MemberRepository,
-                        val memberService: MemberService, val pwEncoder: BCryptPasswordEncoder
-                       ){
+class MemberServiceTest @Autowired constructor(private val memberRepository: MemberRepository){
+    private final val pwEncoder=BCryptPasswordEncoder()
+    val memberService: MemberService=MemberService(memberRepository,pwEncoder)
 
     @Test
     fun 멤버가_있으면_isUser는_true를_반환한다(){

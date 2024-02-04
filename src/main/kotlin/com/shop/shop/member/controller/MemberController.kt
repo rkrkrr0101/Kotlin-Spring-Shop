@@ -22,10 +22,6 @@ class MemberController(val memberService: MemberService) {
         memberService.memberSave(memberCreateDto)
         return Result(ApiHeader())
     }
-    @GetMapping("/ttt")
-    fun abc():Result<ApiHeader>{
-        return Result(ApiHeader())
-    }
 
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
