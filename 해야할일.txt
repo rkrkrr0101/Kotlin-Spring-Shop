@@ -65,8 +65,19 @@
             중복회원가입방지 테스트 //컨트롤러단 테스트 //완
 
         로그인시 토큰발급테스트
+            PrincipalDetailsService테스트
+            JwtAuthenticationFilter테스트
         소셜로그인시 자동회원가입테스트
+            PrincipalOauth2UserService
         소셜로그인시 토큰발급테스트
+            Oauth2AuthenticationSuccessHandler
+
+        토큰확인테스트
+            JwtAuthorizationFilter테스트
+
+        시큐리티쪽은 통합테스트로 미는게 나을거같기도,시큐리티요소들이 너무얽혀있어서
+        소셜로그인쪽은 어떻게 테스트해야할지모르겠다
+        인가코드를 받고 토큰으로 교환해서 확인한다음 진행해야하는데 이쪽을 다 모킹쳐버리면 성공밖에 안되지않나?
 
 
 

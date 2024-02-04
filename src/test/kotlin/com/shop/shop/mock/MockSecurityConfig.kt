@@ -9,6 +9,7 @@ import org.springframework.security.web.SecurityFilterChain
 class MockSecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity):SecurityFilterChain{
+
         http.csrf {
             it.disable()
         }

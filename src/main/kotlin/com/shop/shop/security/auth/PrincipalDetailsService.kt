@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class PrincipalDetailsService(val  memberRepository: MemberRepository):UserDetailsService{
     override fun loadUserByUsername(username: String?): UserDetails {
+
         if (username == null){
             throw IllegalArgumentException("잘못된 username 입력")
         }

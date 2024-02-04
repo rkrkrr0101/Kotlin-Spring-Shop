@@ -26,11 +26,9 @@ class JwtAuthenticationFilter(private val authManager: AuthenticationManager,
         request?:throw IllegalArgumentException("JwtAuthenticationFilter request null")
         val om=ObjectMapper()
         val member = om.readValue(request.inputStream, Member::class.java)
-        println(member)
 
         val authToken = UsernamePasswordAuthenticationToken(member.username, member.password)
         val auth = authManager.authenticate(authToken)
-
         return auth
     }
 
@@ -40,6 +38,7 @@ class JwtAuthenticationFilter(private val authManager: AuthenticationManager,
         chain: FilterChain?,
         authResult: Authentication?
     ) {
+
         if (response==null || authResult==null){
             throw IllegalArgumentException("잘못된입력")
         }

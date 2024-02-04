@@ -10,11 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 @DataJpaTest
 class MemberRepositoryTest(@Autowired val memberRepository: MemberRepository) {
 
-    @BeforeEach
-    fun init(){
-
-    }
-
     @Test
     fun 멤버레포지토리에_멤버를_추가하고_검색할수있다(){
         val member = Member("username111", "password111", "name111", "qqq@aqw.com")

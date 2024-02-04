@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 
 @WebMvcTest( MemberController::class)
-@MockBean(JpaMetamodelMappingContext::class)
+@MockBean(JpaMetamodelMappingContext::class)//baseEntity추가하려면 있어야함
 @ImportAutoConfiguration(MockSecurityConfig::class)
 //@WithMockUser(roles = ["USER"])
 class MemberControllerTest (
@@ -37,6 +37,7 @@ class MemberControllerTest (
         println(memberService.isUser(dto))
         val om = ObjectMapper()
         val contentJson = om.writeValueAsString(dto)
+
 
 
         mvc.perform(post("/join")
