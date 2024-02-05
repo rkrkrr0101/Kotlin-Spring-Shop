@@ -26,7 +26,6 @@ class JwtAuthorizationFilter(authManager: AuthenticationManager,
                              private val memberRepository: MemberRepository):BasicAuthenticationFilter(authManager) {
 
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
-        println("인증서버동작")
         try {
             val jwtHeader = request.getHeader("Authorization")
             if (jwtHeader==null || !jwtHeader.startsWith("Bearer")){ //토큰없거나 이상하면 리턴
@@ -37,9 +36,9 @@ class JwtAuthorizationFilter(authManager: AuthenticationManager,
 
             val accessToken = AccessToken(jwtHeader)
             var username=accessToken.getTokenUsername()
-
             val memberEntity = memberRepository.findByUsername(username)?:
                 throw JWTDecodeException("")
+
             val principalDetails = PrincipalDetails(memberEntity)
             val auth:Authentication=UsernamePasswordAuthenticationToken( //토큰으로 강제로그인
                 principalDetails,

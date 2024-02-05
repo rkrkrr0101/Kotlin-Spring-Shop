@@ -64,16 +64,16 @@
         회원가입테스트 //컨트롤러단 테스트 //완
             중복회원가입방지 테스트 //컨트롤러단 테스트 //완
 
-        로그인시 토큰발급테스트
-            PrincipalDetailsService테스트
-            JwtAuthenticationFilter테스트
+        로그인시 토큰발급테스트 //완
+            PrincipalDetailsService
+            JwtAuthenticationFilter
         소셜로그인시 자동회원가입테스트
             PrincipalOauth2UserService
         소셜로그인시 토큰발급테스트
             Oauth2AuthenticationSuccessHandler
 
         토큰확인테스트
-            JwtAuthorizationFilter테스트
+            JwtAuthorizationFilter
 
         시큐리티쪽은 통합테스트로 미는게 나을거같기도,시큐리티요소들이 너무얽혀있어서
         소셜로그인쪽은 어떻게 테스트해야할지모르겠다
