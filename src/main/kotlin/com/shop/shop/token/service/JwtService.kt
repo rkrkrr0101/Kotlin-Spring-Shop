@@ -27,10 +27,13 @@ class JwtService(val memberRepository: MemberRepository) {
     }
 
     fun createToken(member: Member): TokenResponseDto{
-        val newAccessToken = JwtUtil().generateAccessToken(member)
-        val newRefreshToken = JwtUtil().generateRefreshToken(member)
-        member.refreshTokenId = newRefreshToken.getTokenTokenId()
-        memberRepository.save(member)
+        val findMember = memberRepository.findByUsername(member.username)
+            ?:throw JWTDecodeException("")
+
+        val newAccessToken = JwtUtil().generateAccessToken(findMember)
+        val newRefreshToken = JwtUtil().generateRefreshToken(findMember)
+        findMember.refreshTokenId = newRefreshToken.getTokenTokenId()
+
         return TokenResponseDto(newAccessToken.tokenCode, newRefreshToken.tokenCode)
     }
 }
