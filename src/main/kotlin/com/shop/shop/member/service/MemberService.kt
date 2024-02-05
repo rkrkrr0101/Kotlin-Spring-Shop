@@ -4,6 +4,7 @@ import com.shop.shop.member.domain.Member
 import com.shop.shop.member.domain.MemberPasswordService
 import com.shop.shop.member.dto.MemberCreateDto
 import com.shop.shop.member.repository.MemberRepository
+import jakarta.transaction.Transactional
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -16,6 +17,7 @@ class MemberService(val memberRepository: MemberRepository,val pwEncoder: BCrypt
     }
 
 
+    @Transactional
     fun memberSave(dto: MemberCreateDto){
         val member = Member(dto.username,dto.password,dto.name,dto.email)
         member.role="ROLE_USER"
