@@ -87,13 +87,29 @@
 		판매자:읽기,쓰기
 	판매자는 글을 쓸수있고,업데이트할수있음
 	글읽기는 권한이 없어도 할수있음
-	글은 사진,제목,할인전가격,할인후가격,할인율,무료배송,구매수,본문(json이나 text,사진은 텍스트중간에 경로로),쿠폰으로 구성됨
+	글은 사진,제목,가격,할인율,무료배송,구매수,본문(json이나 text,사진은 텍스트중간에 경로로),쿠폰으로 구성됨
 	글을 검색어없이 요청받을수 없음
 	글을 검색어로 요청하면 기본순서로 페이징을 해서 제공함
 	글을 검색어와 낮은가격순으로 요청하면 낮은가격순으로 페이징을 해서 제공함
 	유저는 상품을 장바구니에 담을수있고,장바구니에서 상품을 삭제할수있음
-	
-	
+	포인트?
+
+    멤버권한변경
+        user->manager(db변경후 토큰생성후 리턴)
+	post만들고
+	    글읽기+검색어+순서(페이징),검색을위해 타이틀에 전문검색사용(디비에서 fulltext),아니면 like%abc%로 만들어두고 수정?
+	    글생성(매니저만)
+	    글수정(해당글만든 매니저만)
+	bucket만들고
+
+	Hibernate Search 검색
+	https://hoyy.github.io/posts/springboot-wiki-8-hibernate-search
+	jpa에 커스텀펑션 추가
+	https://velog.io/@youmakemesmile/Spring-Data-JPA-JPQL-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95Query-nativeQuery-DTO-Mapping-function
+        이때 디스크립트됐으면 AdditionalMappingContributor검색
+    https://stackoverflow.com/questions/75944274/add-support-for-match-against-to-hibernate-with-metadatabuildercontributor
+
+
 	배치로 사용하지않는 리프레시토큰 삭제
 	배치로 사용하지않는 이미지 삭제?
 	
