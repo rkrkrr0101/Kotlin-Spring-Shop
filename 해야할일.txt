@@ -109,6 +109,7 @@
         이때 디스크립트됐으면 AdditionalMappingContributor검색
     https://stackoverflow.com/questions/75944274/add-support-for-match-against-to-hibernate-with-metadatabuildercontributor
     https://aregall.tech/hibernate-6-custom-functions
+    https://discourse.hibernate.org/t/migration-of-dialect-to-hibernate-6/6956/10
 
 	배치로 사용하지않는 리프레시토큰 삭제
 	배치로 사용하지않는 이미지 삭제?
