@@ -108,7 +108,7 @@
 	https://velog.io/@youmakemesmile/Spring-Data-JPA-JPQL-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95Query-nativeQuery-DTO-Mapping-function
         이때 디스크립트됐으면 AdditionalMappingContributor검색
     https://stackoverflow.com/questions/75944274/add-support-for-match-against-to-hibernate-with-metadatabuildercontributor
-
+    https://aregall.tech/hibernate-6-custom-functions
 
 	배치로 사용하지않는 리프레시토큰 삭제
 	배치로 사용하지않는 이미지 삭제?

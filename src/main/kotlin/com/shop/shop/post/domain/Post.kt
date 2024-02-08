@@ -5,6 +5,7 @@ import jakarta.persistence.*
 
 //사진,제목,가격,할인율,무료배송,구매수,본문(json이나 text,사진은 텍스트중간에 경로로),쿠폰으로 구성됨
 @Entity
+//@Table(indexes = [Index(name = "FULLTEXT", columnList = "title")])
 class Post(
     var title:String,
     var price:Int,
