@@ -27,13 +27,13 @@ class Post(
     lateinit var member:Member
 
     fun update(postUpdateDto: PostUpdateDto){
-        title=postUpdateDto.title
-        price=postUpdateDto.price
-        discountRate=postUpdateDto.discountRate
-        shipCount=postUpdateDto.shipCount
-        body=postUpdateDto.body
-        coupon=postUpdateDto.coupon
-        titleImage=postUpdateDto.titleImage
+        title=postUpdateDto.title?:title
+        price=postUpdateDto.price?:price
+        discountRate=postUpdateDto.discountRate?:discountRate
+        shipCount=postUpdateDto.shipCount?:shipCount
+        body=postUpdateDto.body?:body
+        coupon=postUpdateDto.coupon?:coupon
+        titleImage=postUpdateDto.titleImage?:titleImage
     }
 
 
