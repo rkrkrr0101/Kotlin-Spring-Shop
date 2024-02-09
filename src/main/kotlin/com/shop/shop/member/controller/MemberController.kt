@@ -4,7 +4,10 @@ import com.shop.shop.common.ApiHeader
 import com.shop.shop.common.Result
 import com.shop.shop.member.dto.MemberCreateDto
 import com.shop.shop.member.service.MemberService
+import com.shop.shop.security.auth.PrincipalDetails
 import org.springframework.http.HttpStatus
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -21,6 +24,13 @@ class MemberController(val memberService: MemberService) {
         }
         memberService.memberSave(memberCreateDto)
         return Result(ApiHeader())
+    }
+    @PostMapping("/role/update")
+    @PreAuthorize("isAuthenticated()")
+    fun roleUpdate(@AuthenticationPrincipal principalDetails: PrincipalDetails){
+        val member = principalDetails.member
+        memberService.memberRoleUpdate(member)
+
     }
 
     @ExceptionHandler(IllegalArgumentException::class)

@@ -3,6 +3,7 @@ package com.shop.shop.member.service
 import com.shop.shop.member.domain.Member
 import com.shop.shop.member.domain.MemberPasswordService
 import com.shop.shop.member.dto.MemberCreateDto
+import com.shop.shop.member.dto.MemberRoleUpdateDto
 import com.shop.shop.member.repository.MemberRepository
 import jakarta.transaction.Transactional
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -23,5 +24,11 @@ class MemberService(val memberRepository: MemberRepository,val pwEncoder: BCrypt
         member.role="ROLE_USER"
         member.password=MemberPasswordService().cryptPassword(member)
         memberRepository.save(member)
+    }
+    @Transactional
+    fun memberRoleUpdate(member: Member){
+        val findMember = memberRepository.findById(member.id).orElseThrow{throw IllegalArgumentException()}
+
+        findMember.role ="ROLE_MANAGER"
     }
 }
