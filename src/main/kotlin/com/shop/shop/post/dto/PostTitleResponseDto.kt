@@ -3,14 +3,16 @@ package com.shop.shop.post.dto
 import com.shop.shop.post.domain.Post
 
 class PostTitleResponseDto(
-    val id:Long=0,
+    val id:Long,
     val title:String,
     val price:Int,
     val discountRate:Int,
     val shipCount:Int,
+    val createMemberId:Long,
     val coupon:String="",
     val buyCount:Int=0,
-    val titleImage:String="",) {
+    val titleImage:String="",
+    ) {
     companion object{
         fun domainToDto(post: Post):PostTitleResponseDto{
             return PostTitleResponseDto(
@@ -19,6 +21,7 @@ class PostTitleResponseDto(
                 post.price,
                 post.discountRate,
                 post.shipCount,
+                post.member.id,
                 post.coupon,
                 post.buyCount,
                 post.titleImage,)
