@@ -100,16 +100,14 @@
 	    글읽기+검색어+순서(페이징),검색을위해 타이틀에 전문검색사용(디비에서 fulltext),아니면 like%abc%로 만들어두고 수정?
 	    글생성(매니저만)
 	    글수정(해당글만든 매니저만)
+
+	    전문검색 테스트는 h2에서 안됨(확정임),즉 건너띄거나 도커로 db 띄워야함
+
 	bucket만들고
 
-	Hibernate Search 검색
-	https://hoyy.github.io/posts/springboot-wiki-8-hibernate-search
-	jpa에 커스텀펑션 추가
-	https://velog.io/@youmakemesmile/Spring-Data-JPA-JPQL-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95Query-nativeQuery-DTO-Mapping-function
-        이때 디스크립트됐으면 AdditionalMappingContributor검색
-    https://stackoverflow.com/questions/75944274/add-support-for-match-against-to-hibernate-with-metadatabuildercontributor
-    https://aregall.tech/hibernate-6-custom-functions
-    https://discourse.hibernate.org/t/migration-of-dialect-to-hibernate-6/6956/10
+	예외들 묶어서처리
+
+
 
 	배치로 사용하지않는 리프레시토큰 삭제
 	배치로 사용하지않는 이미지 삭제?
@@ -120,4 +118,17 @@
 	
 	
 	
-	
+참고
+
+	Hibernate Search 검색
+	https://hoyy.github.io/posts/springboot-wiki-8-hibernate-search
+	jpa에 커스텀펑션 추가
+	https://velog.io/@youmakemesmile/Spring-Data-JPA-JPQL-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95Query-nativeQuery-DTO-Mapping-function
+        이때 디스크립트됐으면 AdditionalMappingContributor검색
+    https://stackoverflow.com/questions/75944274/add-support-for-match-against-to-hibernate-with-metadatabuildercontributor
+    https://aregall.tech/hibernate-6-custom-functions
+    https://discourse.hibernate.org/t/migration-of-dialect-to-hibernate-6/6956/10
+
+
+    테스트컨테이너
+    https://hogwart-scholars.tistory.com/entry/Spring-Boot-%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88%EB%A1%9C-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0
