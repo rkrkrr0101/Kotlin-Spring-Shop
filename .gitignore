@@ -39,4 +39,5 @@ out/
 ###
 **/application.yml
 **/Constants.kt
+**/application-testContainer.yml
 
