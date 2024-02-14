@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @DataJpaTest
 @Transactional
-class MemberServiceTest @Autowired constructor(private val memberRepository: MemberRepository){
+class  MemberServiceTest @Autowired constructor(private val memberRepository: MemberRepository){
     private final val pwEncoder=BCryptPasswordEncoder()
     val memberService: MemberService=MemberService(memberRepository,pwEncoder)
 

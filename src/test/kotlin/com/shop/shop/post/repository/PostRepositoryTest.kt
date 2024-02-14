@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Sort
 import org.springframework.test.annotation.Rollback
 import org.springframework.test.context.TestPropertySource
+import org.springframework.test.context.transaction.AfterTransaction
 import org.springframework.test.context.transaction.BeforeTransaction
 import org.testcontainers.containers.MySQLContainer
 import org.testcontainers.junit.jupiter.Container
@@ -25,24 +26,10 @@ import org.testcontainers.junit.jupiter.Testcontainers
 class PostRepositoryTest(@Autowired val postRepository: PostRepository,
                          @Autowired val memberRepository: MemberRepository,
                         ) {
-    companion object{
-        @JvmStatic
-        @Container
-        val mysqlContainer=MySQLContainer("mysql:8.0.33")
-            .withDatabaseName("testdb")
-            .withUsername("test")
-            .withPassword("1234")
-            .withEnv("MYSQL_TCP_PORT","3307")
-            //.withInitScript("init_data/fulltext_index_create.sql")
-    }
 
     @BeforeTransaction
     @Rollback(false)
     fun init(){
-
-            postRepository.deleteAll()
-            memberRepository.deleteAll()
-
             val postList = mutableListOf<Post>()
             postList.add(Post("고기 라면 볶음", 3, 10, 1, "da", "none", 3, "aa.img"))
             postList.add(Post("고기 피자 세트", 4, 10, 1, "da", "none", 3, "aa.img"))
@@ -63,18 +50,20 @@ class PostRepositoryTest(@Autowired val postRepository: PostRepository,
                 post.member = findMember
                 postRepository.save(post)
             }
-
-
+    }
+    @AfterTransaction
+    @Rollback(false)
+    fun clean(){
+        postRepository.deleteAll()
+        memberRepository.deleteAll()
     }
 
     @Test
     fun 정상적으로_전문검색을_할수있다(){
         //g
-
         val pageRequest= PageRequest.of(
             0,5, Sort.by("price")
         )
-
         //w
         val findPostPage = postRepository.findByTitleContaining("고기", pageRequest)
         //t
@@ -85,14 +74,11 @@ class PostRepositoryTest(@Autowired val postRepository: PostRepository,
     @Test
     fun 전문검색을_하면서_높은가격순_정렬을_할수있다(){
         //g
-
         val pageRequest= PageRequest.of(
             0,5, Sort.by("price").descending()
         )
-
         //w
         val findPostPage = postRepository.findByTitleContaining("고기", pageRequest)
-
         //t
         Assertions.assertThat(findPostPage.content.size).isEqualTo(3)
         Assertions.assertThat(findPostPage.content[0].price).isEqualTo(4)
