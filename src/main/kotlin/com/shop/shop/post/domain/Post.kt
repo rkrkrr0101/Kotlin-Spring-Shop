@@ -8,6 +8,7 @@ import jakarta.persistence.*
 //사진,제목,가격,할인율,무료배송,구매수,본문(json이나 text,사진은 텍스트중간에 경로로),쿠폰으로 구성됨
 @Entity
 class Post(
+    @Column(columnDefinition = "varchar(255) not null, fulltext key fx_title (title) with parser ngram")
     var title:String,
     var price:Int,
     var discountRate:Int,
