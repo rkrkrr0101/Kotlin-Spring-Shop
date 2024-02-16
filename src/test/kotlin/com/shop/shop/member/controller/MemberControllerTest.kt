@@ -33,8 +33,6 @@ class MemberControllerTest (
         val dto = MemberCreateDto("username111", "password111", "name111", "qqq@aqw.com")
         given(memberService.isUser(dto))
             .willReturn(false)
-        println(memberService.isUser(dto))
-        println(memberService.isUser(dto))
         val om = ObjectMapper()
         val contentJson = om.writeValueAsString(dto)
 
